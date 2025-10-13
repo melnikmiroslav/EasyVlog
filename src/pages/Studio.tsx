@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
 import AdManager from '../components/AdManager'
@@ -36,7 +36,6 @@ function Studio() {
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
   const [selectedVideoForAds, setSelectedVideoForAds] = useState<string | null>(null)
-  const navigate = useNavigate()
 
   const currentUserId = user?.id || phoneUser?.id
   const isLoggedIn = user || phoneUser
@@ -350,9 +349,9 @@ function Studio() {
                     <span>{new Date(video.created_at).toLocaleDateString('ru-RU')}</span>
                   </div>
                   <div className="video-actions">
-                    <button onClick={() => navigate(`/watch/${video.id}`)} className="action-btn">
+                    <Link to={`/watch/${video.id}`} className="action-btn">
                       Смотреть
-                    </button>
+                    </Link>
                     <button onClick={() => handleEdit(video)} className="action-btn edit-btn">
                       Изменить
                     </button>
