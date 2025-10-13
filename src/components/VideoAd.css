@@ -1,0 +1,138 @@
+.video-ad-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.video-ad-container {
+  max-width: 600px;
+  width: 100%;
+  background: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.video-ad-content {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.video-ad-content:hover {
+  transform: scale(1.02);
+}
+
+.video-ad-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+.video-ad-text {
+  padding: 20px;
+  background: linear-gradient(to top, #1a1a1a, transparent);
+  position: relative;
+}
+
+.video-ad-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 8px 0;
+}
+
+.video-ad-description {
+  font-size: 14px;
+  color: #aaa;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.video-ad-cta {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: #065fd4;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.video-ad-content:hover .video-ad-cta {
+  background: #0b7eea;
+}
+
+.video-ad-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: #2a2a2a;
+  border-top: 1px solid #3f3f3f;
+}
+
+.video-ad-timer {
+  font-size: 14px;
+  color: #aaa;
+  font-weight: 500;
+}
+
+.video-ad-close {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.video-ad-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+  .video-ad-overlay {
+    padding: 10px;
+  }
+
+  .video-ad-title {
+    font-size: 18px;
+  }
+
+  .video-ad-description {
+    font-size: 13px;
+  }
+
+  .video-ad-cta {
+    position: static;
+    display: inline-block;
+    margin-top: 12px;
+  }
+}

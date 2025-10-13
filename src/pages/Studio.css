@@ -273,7 +273,7 @@
 
 .video-actions {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 8px;
 }
 
@@ -315,6 +315,22 @@
 
 .delete-btn:hover {
   background-color: #4a1f1f;
+}
+
+.ads-btn {
+  background-color: #1f4a2a;
+  color: #66ffaa;
+}
+
+.ads-btn:hover {
+  background-color: #2a5f3a;
+}
+
+.video-ads-section {
+  grid-column: 1 / -1;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #3f3f3f;
 }
 
 @media (max-width: 768px) {

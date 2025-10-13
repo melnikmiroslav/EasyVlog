@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
+import AdManager from '../components/AdManager'
 import './Studio.css'
 
 interface Video {
@@ -34,6 +35,7 @@ function Studio() {
   const [isExtracting, setIsExtracting] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
+  const [selectedVideoForAds, setSelectedVideoForAds] = useState<string | null>(null)
   const navigate = useNavigate()
 
   const currentUserId = user?.id || phoneUser?.id
@@ -354,11 +356,19 @@ function Studio() {
                     <button onClick={() => handleEdit(video)} className="action-btn edit-btn">
                       Изменить
                     </button>
+                    <button onClick={() => setSelectedVideoForAds(video.id)} className="action-btn ads-btn">
+                      Реклама
+                    </button>
                     <button onClick={() => handleDelete(video.id)} className="action-btn delete-btn">
                       Удалить
                     </button>
                   </div>
                 </div>
+                {selectedVideoForAds === video.id && (
+                  <div className="video-ads-section">
+                    <AdManager videoId={video.id} />
+                  </div>
+                )}
               </div>
             ))}
           </div>

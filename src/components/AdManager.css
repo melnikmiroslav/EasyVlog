@@ -1,0 +1,257 @@
+.ad-manager {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.ad-manager-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.ad-manager-header h3 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.add-ad-btn {
+  padding: 8px 16px;
+  background: #065fd4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.add-ad-btn:hover {
+  background: #0551b5;
+}
+
+.ad-form {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.ad-form h4 {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.ad-form .form-field {
+  margin-bottom: 12px;
+}
+
+.ad-form .form-field label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #030303;
+}
+
+.ad-form .form-field input[type="text"],
+.ad-form .form-field input[type="url"],
+.ad-form .form-field input[type="number"],
+.ad-form .form-field textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.ad-form .form-field textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.checkbox-field label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.checkbox-field input[type="checkbox"] {
+  width: auto;
+  cursor: pointer;
+}
+
+.ad-form .form-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.ad-form .submit-btn,
+.ad-form .cancel-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.ad-form .submit-btn {
+  background: #065fd4;
+  color: white;
+}
+
+.ad-form .submit-btn:hover {
+  background: #0551b5;
+}
+
+.ad-form .cancel-btn {
+  background: #f1f1f1;
+  color: #030303;
+}
+
+.ad-form .cancel-btn:hover {
+  background: #e5e5e5;
+}
+
+.ads-list {
+  margin-top: 20px;
+}
+
+.no-ads {
+  text-align: center;
+  color: #606060;
+  padding: 20px;
+}
+
+.ads-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.ad-item {
+  display: flex;
+  gap: 16px;
+  padding: 12px;
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  background: white;
+}
+
+.ad-item.inactive {
+  opacity: 0.6;
+}
+
+.ad-preview {
+  width: 160px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.ad-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ad-details h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ad-description {
+  margin: 0;
+  font-size: 13px;
+  color: #606060;
+  line-height: 1.4;
+}
+
+.ad-timing {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: #606060;
+}
+
+.ad-status {
+  margin-top: 4px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-badge.active {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.status-badge.inactive {
+  background: #f5f5f5;
+  color: #757575;
+}
+
+.ad-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.ad-actions button {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.ad-actions button:hover {
+  background: #f9f9f9;
+}
+
+.ad-actions .delete-btn {
+  color: #c00;
+  border-color: #c00;
+}
+
+.ad-actions .delete-btn:hover {
+  background: #fff5f5;
+}
+
+@media (max-width: 768px) {
+  .ad-item {
+    flex-direction: column;
+  }
+
+  .ad-preview {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+}

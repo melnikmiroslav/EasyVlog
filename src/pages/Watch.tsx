@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import CommentsList from '../components/CommentsList'
+import VideoAd from '../components/VideoAd'
 import './Watch.css'
 
 interface Video {
@@ -20,19 +21,59 @@ interface Profile {
   avatar_url: string | null
 }
 
+interface Ad {
+  id: string
+  title: string
+  description: string
+  image_url: string
+  link_url: string | null
+  show_at_seconds: number
+  duration_seconds: number
+}
+
 function Watch() {
   const { videoId } = useParams<{ videoId: string }>()
   const navigate = useNavigate()
   const [video, setVideo] = useState<Video | null>(null)
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loading, setLoading] = useState(true)
+  const [ads, setAds] = useState<Ad[]>([])
+  const [currentAd, setCurrentAd] = useState<Ad | null>(null)
+  const [shownAdIds, setShownAdIds] = useState<Set<string>>(new Set())
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const iframeRef = useRef<HTMLIFrameElement>(null)
 
   useEffect(() => {
     if (videoId) {
       loadVideo()
+      loadAds()
       incrementViews()
     }
   }, [videoId])
+
+  useEffect(() => {
+    const videoElement = videoRef.current
+    if (!videoElement || ads.length === 0) return
+
+    const handleTimeUpdate = () => {
+      const currentTime = Math.floor(videoElement.currentTime)
+
+      const adToShow = ads.find(
+        (ad) =>
+          ad.show_at_seconds === currentTime &&
+          !shownAdIds.has(ad.id)
+      )
+
+      if (adToShow) {
+        setCurrentAd(adToShow)
+        setShownAdIds((prev) => new Set(prev).add(adToShow.id))
+        videoElement.pause()
+      }
+    }
+
+    videoElement.addEventListener('timeupdate', handleTimeUpdate)
+    return () => videoElement.removeEventListener('timeupdate', handleTimeUpdate)
+  }, [ads, shownAdIds])
 
   const loadVideo = async () => {
     try {
@@ -66,11 +107,36 @@ function Watch() {
     }
   }
 
+  const loadAds = async () => {
+    if (!videoId) return
+
+    try {
+      const { data, error } = await supabase
+        .from('ads')
+        .select('*')
+        .eq('video_id', videoId)
+        .eq('is_active', true)
+        .order('show_at_seconds', { ascending: true })
+
+      if (error) throw error
+      setAds(data || [])
+    } catch (error) {
+      console.error('Error loading ads:', error)
+    }
+  }
+
   const incrementViews = async () => {
     try {
       await supabase.rpc('increment_video_views', { video_id: videoId })
     } catch (error) {
       console.error('Error incrementing views:', error)
+    }
+  }
+
+  const handleAdClose = () => {
+    setCurrentAd(null)
+    if (videoRef.current) {
+      videoRef.current.play()
     }
   }
 
@@ -149,22 +215,36 @@ function Watch() {
     <div className="watch-page">
       <div className="watch-container">
         <div className="video-player-section">
-          {isYouTubeUrl(video.video_url) ? (
-            <iframe
-              src={getEmbedUrl(video.video_url)}
-              className="video-element"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          ) : (
-            <video
-              src={video.video_url}
-              controls
-              autoPlay
-              muted
-              className="video-element"
-            />
-          )}
+          <div className="video-player-wrapper">
+            {isYouTubeUrl(video.video_url) ? (
+              <iframe
+                ref={iframeRef}
+                src={getEmbedUrl(video.video_url)}
+                className="video-element"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <video
+                ref={videoRef}
+                src={video.video_url}
+                controls
+                autoPlay
+                muted
+                className="video-element"
+              />
+            )}
+            {currentAd && (
+              <VideoAd
+                title={currentAd.title}
+                description={currentAd.description}
+                imageUrl={currentAd.image_url}
+                linkUrl={currentAd.link_url}
+                duration={currentAd.duration_seconds}
+                onClose={handleAdClose}
+              />
+            )}
+          </div>
           <div className="video-info-section">
             <h1 className="video-title">{video.title}</h1>
             <div className="video-metadata">
