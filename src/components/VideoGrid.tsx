@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import VideoCard from './VideoCard'
-import VideoPlayer from './VideoPlayer'
 import './VideoGrid.css'
 
 interface VideoGridProps {
@@ -30,10 +30,10 @@ interface Profile {
 
 
 function VideoGrid({ sidebarOpen, searchQuery }: VideoGridProps) {
+  const navigate = useNavigate()
   const [dbVideos, setDbVideos] = useState<Video[]>([])
   const [profiles, setProfiles] = useState<Map<string, Profile>>(new Map())
   const [loading, setLoading] = useState(true)
-  const [selectedVideo, setSelectedVideo] = useState<any>(null)
   const [activeCategory, setActiveCategory] = useState('Все')
 
   const categories = ['Все', 'Музыка', 'Игры', 'Новости', 'Прямые трансляции', 'Кулинария', 'Спорт', 'Технологии', 'Путешествия', 'Образование']
@@ -151,28 +151,10 @@ function VideoGrid({ sidebarOpen, searchQuery }: VideoGridProps) {
             <VideoCard
               key={video.id}
               {...video}
-              onClick={() => setSelectedVideo(video)}
+              onClick={() => navigate(`/watch/${video.id}`)}
             />
           ))}
         </div>
-      )}
-
-      {selectedVideo && (
-        <VideoPlayer
-          videoUrl={selectedVideo.videoUrl || '#'}
-          title={selectedVideo.title}
-          channel={selectedVideo.channel}
-          avatar={selectedVideo.avatar}
-          avatarUrl={selectedVideo.avatarUrl}
-          views={selectedVideo.views}
-          timestamp={selectedVideo.timestamp}
-          userId={selectedVideo.userId}
-          videoId={selectedVideo.id}
-          onClose={() => {
-            setSelectedVideo(null)
-            loadVideos()
-          }}
-        />
       )}
     </main>
   )

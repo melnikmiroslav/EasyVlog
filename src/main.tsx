@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-ro
 import Studio from './pages/Studio'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
+import Watch from './pages/Watch'
 import Header from './components/Header'
 import { AuthProvider } from './contexts/AuthContext'
 import './index.css'
@@ -33,6 +34,7 @@ function App() {
         <Route path="/" element={<Home searchQuery={searchQuery} onSearchChange={setSearchQuery} />} />
         <Route path="/studio" element={<Studio />} />
         <Route path="/profile/:userId" element={<Profile />} />
+        <Route path="/watch/:videoId" element={<Watch />} />
       </Routes>
     </div>
   )
