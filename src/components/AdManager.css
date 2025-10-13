@@ -190,6 +190,14 @@
   color: #606060;
 }
 
+.ad-frequency {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: #606060;
+  font-weight: 500;
+}
+
 .ad-status {
   margin-top: 4px;
 }

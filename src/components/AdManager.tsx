@@ -12,6 +12,9 @@ interface Ad {
   show_at_seconds: number
   duration_seconds: number
   is_active: boolean
+  max_views_per_user: number | null
+  max_total_views: number | null
+  current_total_views: number
   created_at: string
 }
 
@@ -32,6 +35,8 @@ function AdManager({ videoId }: AdManagerProps) {
     show_at_seconds: 0,
     duration_seconds: 5,
     is_active: true,
+    max_views_per_user: null as number | null,
+    max_total_views: null as number | null,
   })
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
@@ -68,6 +73,16 @@ function AdManager({ videoId }: AdManagerProps) {
       return
     }
 
+    if (formData.max_views_per_user !== null && formData.max_views_per_user < 1) {
+      setError('Частота показа для пользователя должна быть больше 0')
+      return
+    }
+
+    if (formData.max_total_views !== null && formData.max_total_views < 1) {
+      setError('Общая частота показа должна быть больше 0')
+      return
+    }
+
     try {
       if (editingAd) {
         const { error } = await supabase
@@ -80,6 +95,8 @@ function AdManager({ videoId }: AdManagerProps) {
             show_at_seconds: formData.show_at_seconds,
             duration_seconds: formData.duration_seconds,
             is_active: formData.is_active,
+            max_views_per_user: formData.max_views_per_user,
+            max_total_views: formData.max_total_views,
           })
           .eq('id', editingAd.id)
 
@@ -96,6 +113,8 @@ function AdManager({ videoId }: AdManagerProps) {
             show_at_seconds: formData.show_at_seconds,
             duration_seconds: formData.duration_seconds,
             is_active: formData.is_active,
+            max_views_per_user: formData.max_views_per_user,
+            max_total_views: formData.max_total_views,
           },
         ])
 
@@ -120,6 +139,8 @@ function AdManager({ videoId }: AdManagerProps) {
       show_at_seconds: ad.show_at_seconds,
       duration_seconds: ad.duration_seconds,
       is_active: ad.is_active,
+      max_views_per_user: ad.max_views_per_user,
+      max_total_views: ad.max_total_views,
     })
     setShowForm(true)
   }
@@ -146,6 +167,8 @@ function AdManager({ videoId }: AdManagerProps) {
       show_at_seconds: 0,
       duration_seconds: 5,
       is_active: true,
+      max_views_per_user: null,
+      max_total_views: null,
     })
     setEditingAd(null)
     setShowForm(false)
@@ -242,6 +265,34 @@ function AdManager({ videoId }: AdManagerProps) {
             </div>
           </div>
 
+          <div className="form-row">
+            <div className="form-field">
+              <label>Макс. показов для пользователя</label>
+              <input
+                type="number"
+                min="1"
+                value={formData.max_views_per_user || ''}
+                onChange={(e) =>
+                  setFormData({ ...formData, max_views_per_user: e.target.value ? parseInt(e.target.value) : null })
+                }
+                placeholder="Без ограничений"
+              />
+            </div>
+
+            <div className="form-field">
+              <label>Макс. показов всего</label>
+              <input
+                type="number"
+                min="1"
+                value={formData.max_total_views || ''}
+                onChange={(e) =>
+                  setFormData({ ...formData, max_total_views: e.target.value ? parseInt(e.target.value) : null })
+                }
+                placeholder="Без ограничений"
+              />
+            </div>
+          </div>
+
           <div className="form-field checkbox-field">
             <label>
               <input
@@ -280,6 +331,10 @@ function AdManager({ videoId }: AdManagerProps) {
                   <div className="ad-timing">
                     <span>Показ: {formatTime(ad.show_at_seconds)}</span>
                     <span>Длительность: {ad.duration_seconds}с</span>
+                  </div>
+                  <div className="ad-frequency">
+                    <span>На пользователя: {ad.max_views_per_user || '∞'}</span>
+                    <span>Всего: {ad.current_total_views}/{ad.max_total_views || '∞'}</span>
                   </div>
                   <div className="ad-status">
                     {ad.is_active ? (
