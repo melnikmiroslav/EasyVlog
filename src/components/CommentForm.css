@@ -1,0 +1,70 @@
+.comment-form {
+  margin-bottom: 32px;
+}
+
+.comment-input {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #3f3f3f;
+  color: #fff;
+  font-size: 14px;
+  font-family: inherit;
+  padding: 8px 0;
+  outline: none;
+  resize: none;
+  transition: border-color 0.2s;
+}
+
+.comment-input:focus {
+  border-bottom-color: #fff;
+}
+
+.comment-input::placeholder {
+  color: #aaa;
+}
+
+.comment-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.comment-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.comment-form-btn {
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.comment-form-btn.cancel {
+  background: none;
+  color: #aaa;
+}
+
+.comment-form-btn.cancel:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.comment-form-btn.submit {
+  background-color: #3ea6ff;
+  color: #0f0f0f;
+}
+
+.comment-form-btn.submit:hover:not(:disabled) {
+  background-color: #65b8ff;
+}
+
+.comment-form-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

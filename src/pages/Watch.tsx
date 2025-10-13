@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import CommentsList from '../components/CommentsList'
 import './Watch.css'
 
 interface Video {
@@ -186,6 +187,7 @@ function Watch() {
                 <p>{video.description}</p>
               </div>
             )}
+            <CommentsList videoId={video.id} />
           </div>
         </div>
       </div>
