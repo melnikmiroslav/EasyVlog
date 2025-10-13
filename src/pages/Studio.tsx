@@ -343,7 +343,7 @@ function Studio() {
                 <img src={video.thumbnail_url} alt={video.title} className="video-thumbnail" />
                 <div className="video-info">
                   <h3>{video.title}</h3>
-                  <p className="video-description">{video.description}</p>
+                  <p className="studio-video-description">{video.description}</p>
                   <div className="video-stats">
                     <span>{video.views} просмотров</span>
                     <span>{new Date(video.created_at).toLocaleDateString('ru-RU')}</span>
