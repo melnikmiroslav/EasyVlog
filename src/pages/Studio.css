@@ -244,6 +244,7 @@
 
 .video-info {
   padding: 10px;
+  display: block !important;
 }
 
 .video-info h3 {
