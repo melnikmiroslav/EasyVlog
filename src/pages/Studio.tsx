@@ -341,7 +341,7 @@ function Studio() {
             {videos.map((video) => (
               <div key={video.id} className="video-item">
                 <img src={video.thumbnail_url} alt={video.title} className="video-thumbnail" />
-                <div className="video-info">
+                <div className="video-info video-info-studio">
                   <h3>{video.title}</h3>
                   <p className="studio-video-description">{video.description}</p>
                   <div className="video-stats">
