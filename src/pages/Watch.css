@@ -116,8 +116,8 @@
 .video-description {
   background-color: #272727;
   border-radius: 12px;
-  padding: 16px;
-  margin-top: 16px;
+  /**padding: 16px;
+  margin-top: 16px;**/
 }
 
 .video-description p {
