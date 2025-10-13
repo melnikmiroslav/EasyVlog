@@ -247,6 +247,7 @@ function Watch() {
                 className="video-element"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
+                style={{ display: currentAd ? 'none' : 'block' }}
               />
             ) : (
               <video
@@ -256,6 +257,7 @@ function Watch() {
                 autoPlay
                 muted
                 className="video-element"
+                style={{ display: currentAd ? 'none' : 'block' }}
               />
             )}
             {currentAd && (
