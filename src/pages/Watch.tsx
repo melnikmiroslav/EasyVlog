@@ -29,6 +29,9 @@ interface Ad {
   link_url: string | null
   show_at_seconds: number
   duration_seconds: number
+  max_views_per_user: number | null
+  max_total_views: number | null
+  current_total_views: number
 }
 
 function Watch() {
@@ -82,6 +85,17 @@ function Watch() {
     )
 
     if (adToShow) {
+      const userId = getUserId()
+
+      void (async () => {
+        try {
+          await supabase.rpc('increment_ad_views', { p_ad_id: adToShow.id, p_user_id: userId })
+          console.log('Ad view tracked')
+        } catch (err) {
+          console.error('Error tracking ad view:', err)
+        }
+      })()
+
       setCurrentAd(adToShow)
       setShownAdIds((prev) => new Set(prev).add(adToShow.id))
       if (videoRef.current) {
@@ -126,11 +140,21 @@ function Watch() {
     }
   }
 
+  const getUserId = () => {
+    const userId = localStorage.getItem('ad_user_id')
+    if (userId) return userId
+
+    const newUserId = `anon_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+    localStorage.setItem('ad_user_id', newUserId)
+    return newUserId
+  }
+
   const loadAds = async () => {
     if (!videoId) return
 
     try {
-      const { data, error } = await supabase
+      const userId = getUserId()
+      const { data: allAds, error } = await supabase
         .from('ads')
         .select('*')
         .eq('video_id', videoId)
@@ -138,7 +162,17 @@ function Watch() {
         .order('show_at_seconds', { ascending: true })
 
       if (error) throw error
-      setAds(data || [])
+
+      const filteredAds = await Promise.all(
+        (allAds || []).map(async (ad) => {
+          const { data: shouldShow } = await supabase
+            .rpc('should_show_ad', { p_ad_id: ad.id, p_user_id: userId })
+
+          return shouldShow ? ad : null
+        })
+      )
+
+      setAds(filteredAds.filter(ad => ad !== null) as Ad[])
     } catch (error) {
       console.error('Error loading ads:', error)
     }
