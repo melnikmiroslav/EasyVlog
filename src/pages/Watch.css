@@ -143,3 +143,6 @@
     align-items: flex-start;
   }
 }
+.ytp-chrome-top {
+  display: none;
+}
