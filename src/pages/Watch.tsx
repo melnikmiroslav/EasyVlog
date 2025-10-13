@@ -121,6 +121,7 @@ function Watch() {
             src={video.video_url}
             controls
             autoPlay
+            muted
             className="video-element"
           />
           <div className="video-info-section">
