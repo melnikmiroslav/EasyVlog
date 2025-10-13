@@ -40,8 +40,10 @@ function Watch() {
   const [ads, setAds] = useState<Ad[]>([])
   const [currentAd, setCurrentAd] = useState<Ad | null>(null)
   const [shownAdIds, setShownAdIds] = useState<Set<string>>(new Set())
+  const [videoTime, setVideoTime] = useState(0)
   const videoRef = useRef<HTMLVideoElement>(null)
   const iframeRef = useRef<HTMLIFrameElement>(null)
+  const timeIntervalRef = useRef<number | null>(null)
 
   useEffect(() => {
     if (videoId) {
@@ -52,28 +54,45 @@ function Watch() {
   }, [videoId])
 
   useEffect(() => {
+    if (ads.length === 0) return
+
     const videoElement = videoRef.current
-    if (!videoElement || ads.length === 0) return
+    if (videoElement) {
+      const handleTimeUpdate = () => {
+        setVideoTime(Math.floor(videoElement.currentTime))
+      }
+      videoElement.addEventListener('timeupdate', handleTimeUpdate)
+      return () => videoElement.removeEventListener('timeupdate', handleTimeUpdate)
+    } else {
+      const interval = window.setInterval(() => {
+        setVideoTime((prev) => prev + 1)
+      }, 1000)
+      timeIntervalRef.current = interval
+      return () => window.clearInterval(interval)
+    }
+  }, [ads, video])
 
-    const handleTimeUpdate = () => {
-      const currentTime = Math.floor(videoElement.currentTime)
+  useEffect(() => {
+    if (ads.length === 0 || videoTime === 0) return
 
-      const adToShow = ads.find(
-        (ad) =>
-          ad.show_at_seconds === currentTime &&
-          !shownAdIds.has(ad.id)
-      )
+    const adToShow = ads.find(
+      (ad) =>
+        ad.show_at_seconds === videoTime &&
+        !shownAdIds.has(ad.id)
+    )
 
-      if (adToShow) {
-        setCurrentAd(adToShow)
-        setShownAdIds((prev) => new Set(prev).add(adToShow.id))
-        videoElement.pause()
+    if (adToShow) {
+      setCurrentAd(adToShow)
+      setShownAdIds((prev) => new Set(prev).add(adToShow.id))
+      if (videoRef.current) {
+        videoRef.current.pause()
+      }
+      if (timeIntervalRef.current) {
+        window.clearInterval(timeIntervalRef.current)
+        timeIntervalRef.current = null
       }
     }
-
-    videoElement.addEventListener('timeupdate', handleTimeUpdate)
-    return () => videoElement.removeEventListener('timeupdate', handleTimeUpdate)
-  }, [ads, shownAdIds])
+  }, [videoTime, ads, shownAdIds])
 
   const loadVideo = async () => {
     try {
@@ -137,6 +156,11 @@ function Watch() {
     setCurrentAd(null)
     if (videoRef.current) {
       videoRef.current.play()
+    } else if (!timeIntervalRef.current) {
+      const interval = window.setInterval(() => {
+        setVideoTime((prev) => prev + 1)
+      }, 1000)
+      timeIntervalRef.current = interval
     }
   }
 
