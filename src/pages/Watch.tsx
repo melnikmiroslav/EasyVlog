@@ -153,7 +153,7 @@ function Watch() {
             <iframe
               src={getEmbedUrl(video.video_url)}
               className="video-element"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; showinfo=0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
             />
           ) : (
