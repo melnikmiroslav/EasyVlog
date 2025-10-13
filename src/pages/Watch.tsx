@@ -67,7 +67,7 @@ function Watch() {
 
   const incrementViews = async () => {
     try {
-      await supabase.rpc('increment_views', { video_id: videoId })
+      await supabase.rpc('increment_video_views', { video_id: videoId })
     } catch (error) {
       console.error('Error incrementing views:', error)
     }
