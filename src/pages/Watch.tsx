@@ -97,6 +97,37 @@ function Watch() {
     }
   }
 
+  const getEmbedUrl = (url: string) => {
+    try {
+      const urlObj = new URL(url)
+
+      if (urlObj.hostname.includes('youtube.com')) {
+        const videoId = urlObj.searchParams.get('v')
+        if (videoId) {
+          return `https://www.youtube.com/embed/${videoId}?autoplay=1`
+        }
+      }
+
+      if (urlObj.hostname.includes('youtu.be')) {
+        const videoId = urlObj.pathname.slice(1)
+        return `https://www.youtube.com/embed/${videoId}?autoplay=1`
+      }
+
+      if (urlObj.hostname.includes('youtube.com') && urlObj.pathname.includes('/shorts/')) {
+        const videoId = urlObj.pathname.split('/shorts/')[1].split('?')[0]
+        return `https://www.youtube.com/embed/${videoId}?autoplay=1`
+      }
+
+      return url
+    } catch {
+      return url
+    }
+  }
+
+  const isYouTubeUrl = (url: string) => {
+    return url.includes('youtube.com') || url.includes('youtu.be')
+  }
+
   if (loading) {
     return (
       <div className="watch-page">
@@ -117,13 +148,22 @@ function Watch() {
     <div className="watch-page">
       <div className="watch-container">
         <div className="video-player-section">
-          <video
-            src={video.video_url}
-            controls
-            autoPlay
-            muted
-            className="video-element"
-          />
+          {isYouTubeUrl(video.video_url) ? (
+            <iframe
+              src={getEmbedUrl(video.video_url)}
+              className="video-element"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            />
+          ) : (
+            <video
+              src={video.video_url}
+              controls
+              autoPlay
+              muted
+              className="video-element"
+            />
+          )}
           <div className="video-info-section">
             <h1 className="video-title">{video.title}</h1>
             <div className="video-metadata">
