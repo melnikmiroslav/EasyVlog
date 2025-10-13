@@ -50,7 +50,7 @@
 }
 
 .video-info {
-  display: flex;
+  /**display: flex;**/
   gap: 12px;
   position: relative;
 }
