@@ -105,18 +105,18 @@ function Watch() {
       if (urlObj.hostname.includes('youtube.com')) {
         const videoId = urlObj.searchParams.get('v')
         if (videoId) {
-          return `https://www.youtube.com/embed/${videoId}?autoplay=1`
+          return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&showinfo=0`
         }
       }
 
       if (urlObj.hostname.includes('youtu.be')) {
         const videoId = urlObj.pathname.slice(1)
-        return `https://www.youtube.com/embed/${videoId}?autoplay=1`
+        return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&showinfo=0`
       }
 
       if (urlObj.hostname.includes('youtube.com') && urlObj.pathname.includes('/shorts/')) {
         const videoId = urlObj.pathname.split('/shorts/')[1].split('?')[0]
-        return `https://www.youtube.com/embed/${videoId}?autoplay=1`
+        return `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&showinfo=0`
       }
 
       return url
