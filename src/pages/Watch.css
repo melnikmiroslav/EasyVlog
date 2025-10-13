@@ -2,8 +2,7 @@
   display: block;
   background-color: #0f0f0f;
   min-height: 100vh;
-  padding: 24px;
-  margin-top: 56px;
+  padding-top: 80px;
 }
 
 .watch-loading {
@@ -12,17 +11,17 @@
   align-items: center;
   padding: 40px;
   color: #aaa;
+  font-size: 18px;
 }
 
 .watch-container {
   max-width: 1280px;
   margin: 0 auto;
+  padding: 0 24px 24px 24px;
 }
 
 .video-player-section {
-  background-color: #000;
-  border-radius: 12px;
-  overflow: hidden;
+  background-color: #0f0f0f;
 }
 
 .video-player-wrapper {
@@ -30,6 +29,9 @@
   width: 100%;
   aspect-ratio: 16 / 9;
   background-color: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 12px;
 }
 
 .video-element {
@@ -41,15 +43,15 @@
 }
 
 .video-info-section {
-  padding: 20px;
-  background-color: #0f0f0f;
+  padding: 0;
+  background-color: transparent;
 }
 
 .video-title {
   font-size: 20px;
   font-weight: 600;
   color: #fff;
-  margin: 0 0 12px 0;
+  margin: 0 0 16px 0;
   line-height: 1.4;
 }
 
@@ -58,8 +60,10 @@
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
   flex-wrap: wrap;
+  padding: 16px 0;
+  border-bottom: 1px solid #3f3f3f;
 }
 
 .channel-info {
@@ -117,7 +121,7 @@
   background-color: #272727;
   border-radius: 12px;
   padding: 16px;
-  margin-top: 16px;
+  margin-bottom: 24px;
 }
 
 .video-description p {
@@ -126,29 +130,35 @@
   line-height: 1.6;
   margin: 0;
   white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 @media (max-width: 768px) {
   .watch-page {
-    padding: 0;
-    margin-top: 56px;
+    padding-top: 56px;
   }
 
-  .video-player-section {
+  .watch-container {
+    padding: 0 12px 12px 12px;
+  }
+
+  .video-player-wrapper {
     border-radius: 0;
-  }
-
-  .video-info-section {
-    padding: 16px;
+    margin-bottom: 8px;
   }
 
   .video-title {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   .video-metadata {
     flex-direction: column;
     align-items: flex-start;
+    padding: 12px 0;
+  }
+
+  .video-description {
+    padding: 12px;
   }
 }
 
