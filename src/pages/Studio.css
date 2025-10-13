@@ -246,7 +246,7 @@
   padding: 10px;
 }
 .video-info-studio {
-  display: block;
+  display: block !important;
 }
 
 .video-info h3 {
