@@ -1,0 +1,102 @@
+.sidebar {
+  width: 240px;
+  background-color: #0f0f0f;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: width 0.2s, transform 0.2s;
+  flex-shrink: 0;
+  will-change: width, transform;
+  backface-visibility: hidden;
+}
+
+.sidebar.closed {
+  width: 72px;
+}
+
+.sidebar.closed .sidebar-item span,
+.sidebar.closed .sidebar-title {
+  display: none;
+}
+
+.sidebar.closed .sidebar-item {
+  justify-content: center;
+}
+
+.sidebar-content {
+  padding: 12px 0;
+}
+
+.sidebar-section {
+  padding: 8px 0;
+}
+
+.sidebar-divider {
+  border-bottom: 1px solid #3f3f3f;
+  margin: 12px 0;
+}
+
+.sidebar-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #aaa;
+  padding: 8px 24px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 24px;
+  cursor: pointer;
+  color: #ffffff;
+  transition: background-color 0.2s;
+  gap: 24px;
+}
+
+.sidebar-item:hover {
+  background-color: #3f3f3f;
+}
+
+.sidebar-item.active {
+  background-color: #3f3f3f;
+}
+
+.sidebar-item svg {
+  flex-shrink: 0;
+}
+
+.sidebar-item span {
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.channel-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: #1e3a8a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 56px;
+    bottom: 0;
+    z-index: 900;
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+}
