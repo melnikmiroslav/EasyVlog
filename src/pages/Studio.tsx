@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
-import VideoPlayer from '../components/VideoPlayer'
 import './Studio.css'
 
 interface Video {
@@ -34,7 +34,7 @@ function Studio() {
   const [isExtracting, setIsExtracting] = useState(false)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
-  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
+  const navigate = useNavigate()
 
   const currentUserId = user?.id || phoneUser?.id
   const isLoggedIn = user || phoneUser
@@ -348,7 +348,7 @@ function Studio() {
                     <span>{new Date(video.created_at).toLocaleDateString('ru-RU')}</span>
                   </div>
                   <div className="video-actions">
-                    <button onClick={() => setSelectedVideo(video)} className="action-btn">
+                    <button onClick={() => navigate(`/watch/${video.id}`)} className="action-btn">
                       Смотреть
                     </button>
                     <button onClick={() => handleEdit(video)} className="action-btn edit-btn">
@@ -365,17 +365,6 @@ function Studio() {
         )}
       </div>
 
-      {selectedVideo && (
-        <VideoPlayer
-          videoUrl={selectedVideo.video_url}
-          title={selectedVideo.title}
-          channel="Мой Канал"
-          avatar={selectedVideo.title.charAt(0).toUpperCase()}
-          views={selectedVideo.views.toString()}
-          timestamp={new Date(selectedVideo.created_at).toLocaleDateString('ru-RU')}
-          onClose={() => setSelectedVideo(null)}
-        />
-      )}
     </div>
   )
 }

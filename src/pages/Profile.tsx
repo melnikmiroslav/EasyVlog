@@ -1,9 +1,8 @@
 import { useEffect, useState, useRef } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
 import VideoCard from '../components/VideoCard'
-import VideoPlayer from '../components/VideoPlayer'
 import Sidebar from '../components/Sidebar'
 import './Profile.css'
 
@@ -29,6 +28,7 @@ interface UserProfile {
 
 function Profile() {
   const { userId } = useParams<{ userId: string }>()
+  const navigate = useNavigate()
   const { user, phoneUser } = useAuth()
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [videos, setVideos] = useState<Video[]>([])
@@ -39,7 +39,6 @@ function Profile() {
   const [uploading, setUploading] = useState(false)
   const [uploadingBanner, setUploadingBanner] = useState(false)
   const [previewMode, setPreviewMode] = useState(false)
-  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const bannerInputRef = useRef<HTMLInputElement>(null)
 
@@ -365,25 +364,13 @@ function Profile() {
                   avatar={getAvatar(profile.channel_name)}
                   avatarUrl={profile.avatar_url || undefined}
                   userId={video.user_id}
-                  onClick={() => setSelectedVideo(video)}
+                  onClick={() => navigate(`/watch/${video.id}`)}
                 />
               ))}
             </div>
           )}
         </div>
 
-        {selectedVideo && (
-          <VideoPlayer
-            videoUrl={selectedVideo.video_url}
-            title={selectedVideo.title}
-            channel={profile.channel_name}
-            avatar={profile.avatar_url ? undefined : getAvatar(profile.channel_name)}
-            avatarUrl={profile.avatar_url || undefined}
-            views={selectedVideo.views.toString()}
-            timestamp={formatDate(selectedVideo.created_at)}
-            onClose={() => setSelectedVideo(null)}
-          />
-        )}
       </div>
     </div>
   )
