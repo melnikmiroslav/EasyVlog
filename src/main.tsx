@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
+import { HashRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 import Studio from './pages/Studio'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
@@ -52,9 +52,9 @@ try {
   ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
       <AuthProvider>
-        <BrowserRouter>
+        <HashRouter>
           <App />
-        </BrowserRouter>
+        </HashRouter>
       </AuthProvider>
     </React.StrictMode>,
   )
