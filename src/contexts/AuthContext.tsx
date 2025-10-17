@@ -29,35 +29,53 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     let mounted = true
 
     const checkPhoneSession = () => {
-      const storedPhoneUser = localStorage.getItem('phoneUser')
-      if (storedPhoneUser && mounted) {
-        setPhoneUser(JSON.parse(storedPhoneUser))
+      try {
+        const storedPhoneUser = localStorage.getItem('phoneUser')
+        if (storedPhoneUser && mounted) {
+          setPhoneUser(JSON.parse(storedPhoneUser))
+        }
+      } catch (error) {
+        console.error('Error loading phone session:', error)
       }
     }
 
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (mounted) {
-        setUser(session?.user ?? null)
-        checkPhoneSession()
-        setLoading(false)
+    const initAuth = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        if (mounted) {
+          setUser(session?.user ?? null)
+          checkPhoneSession()
+          setLoading(false)
+        }
+      } catch (error) {
+        console.error('Auth session error:', error)
+        if (mounted) {
+          checkPhoneSession()
+          setLoading(false)
+        }
       }
-    }).catch((error) => {
-      console.error('Auth session error:', error)
-      if (mounted) {
-        checkPhoneSession()
-        setLoading(false)
-      }
-    })
+    }
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (mounted) {
-        setUser(session?.user ?? null)
-      }
-    })
+    initAuth()
+
+    let subscription: { unsubscribe: () => void } | null = null
+
+    try {
+      const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+        if (mounted) {
+          setUser(session?.user ?? null)
+        }
+      })
+      subscription = data.subscription
+    } catch (error) {
+      console.error('Error setting up auth listener:', error)
+    }
 
     return () => {
       mounted = false
-      subscription.unsubscribe()
+      if (subscription) {
+        subscription.unsubscribe()
+      }
     }
   }, [])
 

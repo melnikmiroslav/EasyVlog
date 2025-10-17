@@ -28,7 +28,21 @@
     <meta name="twitter:image" content="/icon-512.png" />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <div style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #0f0f0f; color: white; font-family: Arial, sans-serif;">
+        <div style="text-align: center;">
+          <div style="font-size: 24px; margin-bottom: 16px;">EasyVlog</div>
+          <div style="font-size: 14px; color: #aaa;">Загрузка...</div>
+        </div>
+      </div>
+    </div>
+    <script>
+      window.onerror = function(msg, url, lineNo, columnNo, error) {
+        console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError object: ' + JSON.stringify(error));
+        document.getElementById('root').innerHTML = '<div style="padding: 20px; color: white; background-color: #0f0f0f; min-height: 100vh;"><h2>Ошибка загрузки</h2><p>Пожалуйста, обновите страницу или очистите кэш браузера.</p><p style="color: #aaa; font-size: 12px; margin-top: 20px;">' + msg + '</p></div>';
+        return true;
+      };
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
