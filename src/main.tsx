@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Watch from './pages/Watch'
 import Header from './components/Header'
+import NotificationPrompt from './components/NotificationPrompt'
 import { AuthProvider } from './contexts/AuthContext'
 import './index.css'
 
@@ -36,6 +37,7 @@ function App() {
         <Route path="/profile/:userId" element={<Profile />} />
         <Route path="/watch/:videoId" element={<Watch />} />
       </Routes>
+      <NotificationPrompt />
     </div>
   )
 }
