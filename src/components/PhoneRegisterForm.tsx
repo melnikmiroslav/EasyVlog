@@ -51,12 +51,13 @@ function PhoneRegisterForm({ onSuccess, onSwitchToLogin }: PhoneRegisterFormProp
 
       {error && <div className="error-message">{error}</div>}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="auth-form">
         <div className="form-group">
-          <label htmlFor="phone">Номер телефона</label>
+          <label htmlFor="phone" className="form-label">Номер телефона</label>
           <input
             type="tel"
             id="phone"
+            className="form-input"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="+79001234567"
@@ -65,22 +66,24 @@ function PhoneRegisterForm({ onSuccess, onSwitchToLogin }: PhoneRegisterFormProp
         </div>
 
         <div className="form-group">
-          <label htmlFor="password">Пароль</label>
+          <label htmlFor="password" className="form-label">Пароль</label>
           <input
             type="password"
             id="password"
+            className="form-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Минимум 6 символов"
+            placeholder="Минимум 6 символьов"
             disabled={loading}
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="confirmPassword">Подтвердите пароль</label>
+          <label htmlFor="confirmPassword" className="form-label">Подтвердите пароль</label>
           <input
             type="password"
             id="confirmPassword"
+            className="form-input"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             placeholder="Повторите пароль"
@@ -92,14 +95,11 @@ function PhoneRegisterForm({ onSuccess, onSwitchToLogin }: PhoneRegisterFormProp
           {loading ? 'Регистрация...' : 'Зарегистрироваться'}
         </button>
 
-        <button
-          type="button"
-          className="link-button"
-          onClick={onSwitchToLogin}
-          disabled={loading}
-        >
-          Уже есть аккаунт? Войти
-        </button>
+        <div className="toggle-mode">
+          <span className="toggle-link" onClick={onSwitchToLogin}>
+            Уже есть аккаунт? Войти
+          </span>
+        </div>
       </form>
     </div>
   )

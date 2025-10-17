@@ -45,12 +45,13 @@ function EmailLoginForm({ onSuccess, onSwitchToRegister }: EmailLoginFormProps) 
 
       {error && <div className="error-message">{error}</div>}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="auth-form">
         <div className="form-group">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email" className="form-label">Email</label>
           <input
             type="email"
             id="email"
+            className="form-input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="example@mail.com"
@@ -59,10 +60,11 @@ function EmailLoginForm({ onSuccess, onSwitchToRegister }: EmailLoginFormProps) 
         </div>
 
         <div className="form-group">
-          <label htmlFor="password">Пароль</label>
+          <label htmlFor="password" className="form-label">Пароль</label>
           <input
             type="password"
             id="password"
+            className="form-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Введите пароль"
@@ -74,14 +76,11 @@ function EmailLoginForm({ onSuccess, onSwitchToRegister }: EmailLoginFormProps) 
           {loading ? 'Вход...' : 'Войти'}
         </button>
 
-        <button
-          type="button"
-          className="link-button"
-          onClick={onSwitchToRegister}
-          disabled={loading}
-        >
-          Нет аккаунта? Зарегистрироваться
-        </button>
+        <div className="toggle-mode">
+          <span className="toggle-link" onClick={onSwitchToRegister}>
+            Нет аккаунта? Зарегистрироваться
+          </span>
+        </div>
       </form>
     </div>
   )

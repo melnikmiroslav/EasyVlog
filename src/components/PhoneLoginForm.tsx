@@ -45,12 +45,13 @@ function PhoneLoginForm({ onSuccess, onSwitchToRegister }: PhoneLoginFormProps) 
 
       {error && <div className="error-message">{error}</div>}
 
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="auth-form">
         <div className="form-group">
-          <label htmlFor="phone">Номер телефона</label>
+          <label htmlFor="phone" className="form-label">Номер телефона</label>
           <input
             type="tel"
             id="phone"
+            className="form-input"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="+79001234567"
@@ -59,10 +60,11 @@ function PhoneLoginForm({ onSuccess, onSwitchToRegister }: PhoneLoginFormProps) 
         </div>
 
         <div className="form-group">
-          <label htmlFor="password">Пароль</label>
+          <label htmlFor="password" className="form-label">Пароль</label>
           <input
             type="password"
             id="password"
+            className="form-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Введите пароль"
@@ -74,14 +76,11 @@ function PhoneLoginForm({ onSuccess, onSwitchToRegister }: PhoneLoginFormProps) 
           {loading ? 'Вход...' : 'Войти'}
         </button>
 
-        <button
-          type="button"
-          className="link-button"
-          onClick={onSwitchToRegister}
-          disabled={loading}
-        >
-          Нет аккаунта? Зарегистрироваться
-        </button>
+        <div className="toggle-mode">
+          <span className="toggle-link" onClick={onSwitchToRegister}>
+            Нет аккаунта? Зарегистрироваться
+          </span>
+        </div>
       </form>
     </div>
   )
