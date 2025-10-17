@@ -7,9 +7,10 @@ import './Header.css'
 interface HeaderProps {
   searchQuery?: string
   onSearchChange?: (query: string) => void
+  onMenuClick?: () => void
 }
 
-function Header({ searchQuery = '', onSearchChange }: HeaderProps) {
+function Header({ searchQuery = '', onSearchChange, onMenuClick }: HeaderProps) {
   const navigate = useNavigate()
   const location = useLocation()
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
@@ -56,6 +57,11 @@ function Header({ searchQuery = '', onSearchChange }: HeaderProps) {
     <>
       <header className="header">
         <div className="header-left">
+          <button className="icon-button menu-button" onClick={onMenuClick} aria-label="Menu">
+            <svg viewBox="0 0 24 24" width="24" height="24">
+              <path fill="currentColor" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+            </svg>
+          </button>
           <div className="logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
             <svg viewBox="0 0 180 40" width="180" height="40">
               <defs>

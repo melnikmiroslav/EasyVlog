@@ -49,7 +49,11 @@ function VideoGrid({ sidebarOpen, searchQuery }: VideoGridProps) {
         .select('*')
         .order('created_at', { ascending: false })
 
-      if (videosError) throw videosError
+      if (videosError) {
+        console.error('Error loading videos:', videosError)
+        throw videosError
+      }
+      console.log('Loaded videos:', videosData?.length || 0)
       setDbVideos(videosData || [])
 
       if (videosData && videosData.length > 0) {

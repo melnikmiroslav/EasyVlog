@@ -2,11 +2,14 @@ import './Sidebar.css'
 
 interface SidebarProps {
   isOpen: boolean
+  onClose?: () => void
 }
 
-function Sidebar({ isOpen }: SidebarProps) {
+function Sidebar({ isOpen, onClose }: SidebarProps) {
   return (
-    <aside className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
+    <>
+      {isOpen && <div className="sidebar-overlay" onClick={onClose} />}
+      <aside className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
       <div className="sidebar-content">
         <div className="sidebar-section">
           <div className="sidebar-item active">
@@ -87,6 +90,7 @@ function Sidebar({ isOpen }: SidebarProps) {
         </div>
       </div>
     </aside>
+    </>
   )
 }
 

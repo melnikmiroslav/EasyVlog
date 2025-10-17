@@ -12,6 +12,7 @@ import './index.css'
 
 function App() {
   const [searchQuery, setSearchQuery] = useState('')
+  const [sidebarOpen, setSidebarOpen] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
 
@@ -30,9 +31,9 @@ function App() {
 
   return (
     <div className="app">
-      <Header searchQuery={searchQuery} onSearchChange={handleSearchChange} />
+      <Header searchQuery={searchQuery} onSearchChange={handleSearchChange} onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
       <Routes>
-        <Route path="/" element={<Home searchQuery={searchQuery} onSearchChange={setSearchQuery} />} />
+        <Route path="/" element={<Home searchQuery={searchQuery} onSearchChange={setSearchQuery} sidebarOpen={sidebarOpen} onSidebarClose={() => setSidebarOpen(false)} />} />
         <Route path="/studio" element={<Studio />} />
         <Route path="/profile/:userId" element={<Profile />} />
         <Route path="/watch/:videoId" element={<Watch />} />

@@ -5,14 +5,15 @@ import VideoGrid from '../components/VideoGrid'
 interface HomeProps {
   searchQuery: string
   onSearchChange: (query: string) => void
+  sidebarOpen: boolean
+  onSidebarClose: () => void
 }
 
-function Home({ searchQuery, onSearchChange }: HomeProps) {
-  const [sidebarOpen] = useState(true)
+function Home({ searchQuery, onSearchChange, sidebarOpen, onSidebarClose }: HomeProps) {
 
   return (
     <div className="main-container">
-      <Sidebar isOpen={sidebarOpen} />
+      <Sidebar isOpen={sidebarOpen} onClose={onSidebarClose} />
       <VideoGrid sidebarOpen={sidebarOpen} searchQuery={searchQuery} onSearchChange={onSearchChange} />
     </div>
   )
