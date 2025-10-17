@@ -1,0 +1,44 @@
+# Деплой на GitHub Pages
+
+## Шаги для деплоя:
+
+### 1. Создайте репозиторий на GitHub
+- Зайдите на https://github.com/new
+- Создайте новый репозиторий (публичный или приватный)
+
+### 2. Добавьте Secrets в настройках репозитория
+Зайдите в Settings → Secrets and variables → Actions → New repository secret
+
+Добавьте два секрета:
+
+**VITE_SUPABASE_URL**
+```
+https://vzmqodgknakuyvmtuofx.supabase.co
+```
+
+**VITE_SUPABASE_ANON_KEY**
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6bXFvZGdrbmFrdXl2bXR1b2Z4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1MjkxNjEsImV4cCI6MjA3NTEwNTE2MX0.6NNrin6Bgl7RFxw-HF4KY_nk6f-0EA27PHJzYny5yuw
+```
+
+### 3. Включите GitHub Pages
+Settings → Pages → Source: GitHub Actions
+
+### 4. Запушьте код в GitHub
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/USERNAME/REPO.git
+git push -u origin main
+```
+
+### 5. Деплой произойдёт автоматически
+- После пуша в main запустится GitHub Actions
+- Через 1-2 минуты сайт будет доступен по адресу: https://USERNAME.github.io/REPO
+
+## Важно!
+- Не удаляйте файл `.github/workflows/deploy.yml`
+- При каждом пуше в main будет автоматический деплой
+- Проверьте статус деплоя во вкладке Actions на GitHub
