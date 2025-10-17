@@ -16,7 +16,10 @@ export const requestNotificationPermission = async (): Promise<boolean> => {
   return false;
 };
 
-export const subscribeToPushNotifications = async (): Promise<PushSubscription | null> => {
+export const subscribeToPushNotifications = async (
+  supabase: any,
+  userId: string
+): Promise<PushSubscription | null> => {
   try {
     const registration = await navigator.serviceWorker.ready;
 
@@ -27,6 +30,19 @@ export const subscribeToPushNotifications = async (): Promise<PushSubscription |
       )
     });
 
+    const { error } = await supabase
+      .from('push_subscriptions')
+      .upsert({
+        user_id: userId,
+        subscription: subscription.toJSON()
+      });
+
+    if (error) {
+      console.error('Failed to save subscription:', error);
+      await subscription.unsubscribe();
+      return null;
+    }
+
     return subscription;
   } catch (error) {
     console.error('Failed to subscribe to push notifications:', error);
@@ -34,13 +50,22 @@ export const subscribeToPushNotifications = async (): Promise<PushSubscription |
   }
 };
 
-export const unsubscribeFromPushNotifications = async (): Promise<boolean> => {
+export const unsubscribeFromPushNotifications = async (
+  supabase: any,
+  userId: string
+): Promise<boolean> => {
   try {
     const registration = await navigator.serviceWorker.ready;
     const subscription = await registration.pushManager.getSubscription();
 
     if (subscription) {
       await subscription.unsubscribe();
+
+      await supabase
+        .from('push_subscriptions')
+        .delete()
+        .eq('user_id', userId);
+
       return true;
     }
 

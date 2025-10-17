@@ -1,27 +1,32 @@
 import { useState, useEffect } from 'react';
-import { requestNotificationPermission } from '../utils/notifications';
+import { requestNotificationPermission, subscribeToPushNotifications } from '../utils/notifications';
+import { useAuth } from '../contexts/AuthContext';
+import { supabase } from '../lib/supabase';
 import './NotificationPrompt.css';
 
 export default function NotificationPrompt() {
   const [show, setShow] = useState(false);
   const [dismissed, setDismissed] = useState(false);
+  const { user, phoneUser } = useAuth();
+  const currentUserId = user?.id || phoneUser?.id;
 
   useEffect(() => {
     const hasSeenPrompt = localStorage.getItem('notification-prompt-seen');
 
-    if (!hasSeenPrompt && Notification.permission === 'default') {
+    if (!hasSeenPrompt && Notification.permission === 'default' && currentUserId) {
       const timer = setTimeout(() => {
         setShow(true);
       }, 3000);
 
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [currentUserId]);
 
   const handleEnable = async () => {
     const granted = await requestNotificationPermission();
 
-    if (granted) {
+    if (granted && currentUserId) {
+      await subscribeToPushNotifications(supabase, currentUserId);
       localStorage.setItem('notification-prompt-seen', 'true');
       setShow(false);
       setDismissed(true);
