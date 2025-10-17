@@ -3,10 +3,18 @@
   transition: transform 0.2s;
   will-change: transform;
   backface-visibility: hidden;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
 .video-card:hover {
   transform: translateY(-4px);
+}
+
+.video-card:active {
+  transform: scale(0.98);
 }
 
 .thumbnail-container {

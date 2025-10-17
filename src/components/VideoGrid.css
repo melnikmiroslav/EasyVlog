@@ -5,6 +5,8 @@
   background-color: #0f0f0f;
   will-change: scroll-position;
   backface-visibility: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .category-chips {
@@ -39,13 +41,20 @@
   white-space: nowrap;
   font-size: 14px;
   font-weight: 500;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, transform 0.1s;
   border: 1px solid transparent;
   flex-shrink: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
 }
 
 .chip:hover {
   background-color: #3f3f3f;
+}
+
+.chip:active {
+  transform: scale(0.96);
 }
 
 .chip.active {

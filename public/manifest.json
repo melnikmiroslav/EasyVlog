@@ -1,11 +1,12 @@
 {
-  "name": "YouTube Clone",
-  "short_name": "YTClone",
-  "description": "A modern video sharing platform",
+  "name": "EasyVlog",
+  "short_name": "EasyVlog",
+  "description": "Платформа для обмена видео",
   "start_url": "/",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "fullscreen"],
   "background_color": "#0f0f0f",
-  "theme_color": "#ff0000",
+  "theme_color": "#065fd4",
   "orientation": "portrait-primary",
   "icons": [
     {
