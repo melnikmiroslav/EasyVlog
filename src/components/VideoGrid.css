@@ -13,10 +13,21 @@
   margin-bottom: 24px;
   overflow-x: auto;
   padding-bottom: 8px;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
 }
 
 .category-chips::-webkit-scrollbar {
   height: 4px;
+}
+
+.category-chips::-webkit-scrollbar-thumb {
+  background-color: #3f3f3f;
+  border-radius: 4px;
+}
+
+.category-chips::-webkit-scrollbar-track {
+  background-color: transparent;
 }
 
 .chip {
@@ -30,6 +41,7 @@
   font-weight: 500;
   transition: background-color 0.2s;
   border: 1px solid transparent;
+  flex-shrink: 0;
 }
 
 .chip:hover {
