@@ -11,14 +11,24 @@ export default function NotificationPrompt() {
   const currentUserId = user?.id || phoneUser?.id;
 
   useEffect(() => {
-    const hasSeenPrompt = localStorage.getItem('notification-prompt-seen');
+    try {
+      const hasSeenPrompt = localStorage.getItem('notification-prompt-seen');
 
-    if (!hasSeenPrompt && Notification.permission === 'default' && currentUserId) {
-      const timer = setTimeout(() => {
-        setShow(true);
-      }, 3000);
+      if (typeof window === 'undefined' || !('Notification' in window)) {
+        return;
+      }
 
-      return () => clearTimeout(timer);
+      const NotificationAPI = window.Notification;
+
+      if (!hasSeenPrompt && NotificationAPI && NotificationAPI.permission === 'default' && currentUserId) {
+        const timer = setTimeout(() => {
+          setShow(true);
+        }, 3000);
+
+        return () => clearTimeout(timer);
+      }
+    } catch (error) {
+      console.error('Error checking notification permission:', error);
     }
   }, [currentUserId]);
 

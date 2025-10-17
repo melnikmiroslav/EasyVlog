@@ -1,19 +1,30 @@
 export const requestNotificationPermission = async (): Promise<boolean> => {
-  if (!('Notification' in window)) {
-    console.log('This browser does not support notifications');
+  try {
+    if (typeof window === 'undefined' || !('Notification' in window)) {
+      console.log('This browser does not support notifications');
+      return false;
+    }
+
+    const NotificationAPI = window.Notification;
+
+    if (!NotificationAPI) {
+      return false;
+    }
+
+    if (NotificationAPI.permission === 'granted') {
+      return true;
+    }
+
+    if (NotificationAPI.permission !== 'denied') {
+      const permission = await NotificationAPI.requestPermission();
+      return permission === 'granted';
+    }
+
+    return false;
+  } catch (error) {
+    console.error('Notification permission error:', error);
     return false;
   }
-
-  if (Notification.permission === 'granted') {
-    return true;
-  }
-
-  if (Notification.permission !== 'denied') {
-    const permission = await Notification.requestPermission();
-    return permission === 'granted';
-  }
-
-  return false;
 };
 
 export const subscribeToPushNotifications = async (
@@ -21,6 +32,11 @@ export const subscribeToPushNotifications = async (
   userId: string
 ): Promise<PushSubscription | null> => {
   try {
+    if (!('serviceWorker' in navigator) || !('PushManager' in window)) {
+      console.log('Push notifications not supported');
+      return null;
+    }
+
     const registration = await navigator.serviceWorker.ready;
 
     const subscription = await registration.pushManager.subscribe({
@@ -55,6 +71,10 @@ export const unsubscribeFromPushNotifications = async (
   userId: string
 ): Promise<boolean> => {
   try {
+    if (!('serviceWorker' in navigator)) {
+      return false;
+    }
+
     const registration = await navigator.serviceWorker.ready;
     const subscription = await registration.pushManager.getSubscription();
 
@@ -77,12 +97,22 @@ export const unsubscribeFromPushNotifications = async (
 };
 
 export const showLocalNotification = (title: string, options?: NotificationOptions) => {
-  if (Notification.permission === 'granted') {
-    new Notification(title, {
-      icon: '/icon-192.png',
-      badge: '/icon-96.png',
-      ...options
-    });
+  try {
+    if (typeof window === 'undefined' || !('Notification' in window)) {
+      return;
+    }
+
+    const NotificationAPI = window.Notification;
+
+    if (NotificationAPI && NotificationAPI.permission === 'granted') {
+      new NotificationAPI(title, {
+        icon: '/icon-192.png',
+        badge: '/icon-96.png',
+        ...options
+      });
+    }
+  } catch (error) {
+    console.error('Failed to show notification:', error);
   }
 };
 
