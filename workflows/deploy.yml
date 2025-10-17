@@ -1,1 +1,94 @@
+# Деплой на GitHub Pages
+
+## Шаг 1: Создай репозиторий на GitHub
+
+1. Зайди на https://github.com/new
+2. Назови репозиторий (например: `easyvlog`)
+3. Оставь репозиторий **Public**
+4. НЕ добавляй README, .gitignore или лицензию
+5. Нажми **Create repository**
+
+## Шаг 2: Загрузи код
+
+В терминале выполни:
+
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/ТВОЙ-USERNAME/ТВОЙ-REPO.git
+git push -u origin main
+```
+
+## Шаг 3: Добавь секреты
+
+1. Зайди в свой репозиторий на GitHub
+2. Перейди в **Settings** → **Secrets and variables** → **Actions**
+3. Нажми **New repository secret** и добавь три секрета:
+
+### VITE_SUPABASE_URL
+```
+https://vzmqodgknakuyvmtuofx.supabase.co
+```
+
+### VITE_SUPABASE_ANON_KEY
+```
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6bXFvZGdrbmFrdXl2bXR1b2Z4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1MjkxNjEsImV4cCI6MjA3NTEwNTE2MX0.6NNrin6Bgl7RFxw-HF4KY_nk6f-0EA27PHJzYny5yuw
+```
+
+### VITE_VAPID_PUBLIC_KEY
+```
+BEL7qKQnYqjz0vF_Y8xK8YrE2gH9mQp3xN4wJ5dV7tR2sP6vL8bK3nM1hG5jC9fW2kT7xY4zR6pQ8vN3mD5sL1A
+```
+
+## Шаг 4: Включи GitHub Pages
+
+1. В репозитории перейди в **Settings** → **Pages**
+2. В **Source** выбери **GitHub Actions**
+3. Сохрани
+
+## Шаг 5: Деплой
+
+GitHub Actions автоматически задеплоит твой сайт после пуша кода.
+
+Проверь статус в **Actions** tab.
+
+## Твоя ссылка
+
+После успешного деплоя твой сайт будет доступен по адресу:
+
+```
+https://ТВОЙ-USERNAME.github.io/ТВОЙ-REPO/
+```
+
+Например:
+```
+https://username.github.io/easyvlog/
+```
+
+## Обновление сайта
+
+Чтобы обновить сайт, просто пуш изменения:
+
+```bash
+git add .
+git commit -m "Update"
+git push
+```
+
+GitHub Actions автоматически пересоберёт и задеплоит сайт.
+
+## Важно для PWA
+
+- GitHub Pages автоматически использует HTTPS
+- PWA функции (уведомления, установка) будут работать полноценно
+- Service Worker будет работать корректно
+
+## Проблемы?
+
+Если что-то не работает:
+1. Проверь **Actions** tab для ошибок сборки
+2. Убедись, что все секреты добавлены правильно
+3. Проверь что GitHub Pages включён в настройках
 
