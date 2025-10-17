@@ -1,0 +1,36 @@
+{
+  "name": "YouTube Clone",
+  "short_name": "YTClone",
+  "description": "A modern video sharing platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f0f0f",
+  "theme_color": "#ff0000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["entertainment", "video"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Home",
+      "short_name": "Home",
+      "description": "Open home page",
+      "url": "/",
+      "icons": []
+    },
+    {
+      "name": "Studio",
+      "short_name": "Studio",
+      "description": "Upload videos",
+      "url": "/studio",
+      "icons": []
+    }
+  ]
+}
