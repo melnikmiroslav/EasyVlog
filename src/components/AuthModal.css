@@ -86,15 +86,15 @@
 .form-label {
   font-size: 14px;
   font-weight: 500;
-  color: #fff;
+  color: #030303;
 }
 
 .form-input {
-  background-color: #121212;
-  border: 1px solid #3f3f3f;
+  background-color: #f9f9f9;
+  border: 1px solid #d0d0d0;
   border-radius: 8px;
   padding: 12px 16px;
-  color: #fff;
+  color: #030303;
   font-size: 16px;
   outline: none;
   transition: border-color 0.2s;
@@ -102,6 +102,7 @@
 
 .form-input:focus {
   border-color: #1e3a8a;
+  background-color: #fff;
 }
 
 .form-input::placeholder {
@@ -109,11 +110,11 @@
 }
 
 .error-message {
-  background-color: #3a1515;
+  background-color: #fff5f5;
   border: 1px solid #cc0000;
   border-radius: 8px;
   padding: 12px;
-  color: #ff6b6b;
+  color: #cc0000;
   font-size: 14px;
 }
 
@@ -143,7 +144,7 @@
 .toggle-mode {
   text-align: center;
   margin-top: 16px;
-  color: #aaa;
+  color: #606060;
   font-size: 14px;
 }
 
@@ -160,11 +161,11 @@
 }
 
 .success-message {
-  background-color: #1a3a2a;
+  background-color: #f0fff4;
   border: 1px solid #00cc66;
   border-radius: 8px;
   padding: 12px;
-  color: #66ffaa;
+  color: #00aa44;
   font-size: 14px;
   text-align: center;
 }
