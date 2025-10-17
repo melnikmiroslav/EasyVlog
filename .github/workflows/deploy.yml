@@ -26,8 +26,8 @@ jobs:
 
       - name: Build
         env:
-          VITE_Bolt Database_URL: ${{ secrets.VITE_Bolt Database_URL }}
-          VITE_Bolt Database_ANON_KEY: ${{ secrets.VITE_Bolt Database_ANON_KEY }}
+          VITE_Bolt Database_URL: ${{ vars.VITE_Bolt Database_URL }}
+          VITE_Bolt Database_ANON_KEY: ${{ vars.VITE_Bolt Database_ANON_KEY }}
         run: npm run build
 
       - name: Setup Pages
