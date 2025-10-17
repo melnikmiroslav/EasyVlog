@@ -64,8 +64,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signIn = async (email: string, password: string) => {
     try {
       const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
+        email: email.trim(),
+        password: password.trim(),
       })
       return { error }
     } catch (error) {
@@ -76,8 +76,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signUp = async (email: string, password: string) => {
     try {
       const { error } = await supabase.auth.signUp({
-        email,
-        password,
+        email: email.trim(),
+        password: password.trim(),
       })
       return { error }
     } catch (error) {
@@ -87,21 +87,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const registerWithPhone = async (phone: string, password: string) => {
     try {
+      const cleanPhone = phone.trim()
+      const cleanPassword = password.trim()
+
       const { data: existingUser } = await supabase
         .from('phone_users')
         .select('id')
-        .eq('phone', phone)
+        .eq('phone', cleanPhone)
         .maybeSingle()
 
       if (existingUser) {
         return { error: new Error('Этот номер телефона уже зарегистрирован') }
       }
 
-      const passwordHash = btoa(password)
+      const passwordHash = btoa(cleanPassword)
 
       const { data, error } = await supabase
         .from('phone_users')
-        .insert([{ phone, password_hash: passwordHash }])
+        .insert([{ phone: cleanPhone, password_hash: passwordHash }])
         .select('id, phone')
         .single()
 
@@ -119,12 +122,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithPhone = async (phone: string, password: string) => {
     try {
-      const passwordHash = btoa(password)
+      const cleanPhone = phone.trim()
+      const cleanPassword = password.trim()
+      const passwordHash = btoa(cleanPassword)
 
       const { data, error } = await supabase
         .from('phone_users')
         .select('id, phone, password_hash')
-        .eq('phone', phone)
+        .eq('phone', cleanPhone)
         .maybeSingle()
 
       if (error || !data) {
