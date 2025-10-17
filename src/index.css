@@ -58,6 +58,6 @@ body {
 .main-container {
   display: flex;
   flex: 1;
-  padding-top: 56px;
+  padding-top: calc(56px + env(safe-area-inset-top));
   overflow: hidden;
 }

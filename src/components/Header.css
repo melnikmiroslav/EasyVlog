@@ -9,6 +9,9 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 16px;
+  padding-top: env(safe-area-inset-top);
+  padding-left: max(16px, env(safe-area-inset-left));
+  padding-right: max(16px, env(safe-area-inset-right));
   z-index: 1000;
   border-bottom: 1px solid #3f3f3f;
   will-change: transform;
