@@ -1,7 +1,7 @@
-const CACHE_NAME = 'easyvlog-v2';
-const STATIC_CACHE = 'easyvlog-static-v2';
-const DYNAMIC_CACHE = 'easyvlog-dynamic-v2';
-const VIDEO_CACHE = 'easyvlog-video-v2';
+const CACHE_NAME = 'easyvlog-v3';
+const STATIC_CACHE = 'easyvlog-static-v3';
+const DYNAMIC_CACHE = 'easyvlog-dynamic-v3';
+const VIDEO_CACHE = 'easyvlog-video-v3';
 
 const STATIC_ASSETS = [
   '/',
