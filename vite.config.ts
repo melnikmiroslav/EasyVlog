@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: './',
   optimizeDeps: {
     include: ['react-router-dom']
   },
@@ -11,6 +10,7 @@ export default defineConfig({
     dedupe: ['react', 'react-dom', 'react-router-dom']
   },
   build: {
+    target: 'es2015',
     rollupOptions: {
       output: {
         manualChunks: undefined
