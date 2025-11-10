@@ -26,8 +26,8 @@ jobs:
 
       - name: Build
         env:
-          VITE_Bolt Database_URL: ${{ vars.VITE_Bolt Database_URL }}
-          VITE_Bolt Database_ANON_KEY: ${{ vars.VITE_Bolt Database_ANON_KEY }}
+          VITE_SUPABASE_URL: https://qapxinhrceqobomguzts.supabase.co
+          VITE_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFhcHhpbmhyY2Vxb2JvbWd1enRzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI3NjI3MTYsImV4cCI6MjA3ODMzODcxNn0.ul4ZGrXMvm-w6hJvnWv_RXahgCzBlwsM3VA3albg_4M
         run: npm run build
 
       - name: Setup Pages
